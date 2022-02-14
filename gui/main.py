@@ -165,20 +165,25 @@ class HomePage(tk.Frame):
         label.place(relx=0.5, rely=0.1, anchor="n")
         
         # menu
-        button = ttk.Button(self, text="Data Analysis",
+        dataAnalysisPageButton = ttk.Button(self, text="Data Analysis",
                             command=lambda: controller.show_frame(DataAnalysis))
-        button.pack()
-        button.place(relx=0.3, rely=0.2, anchor="n")
+        #dataAnalysisPageButton.pack()
+        #dataAnalysisPageButton.place(relx=0.3, rely=0.2, anchor="n")
 
-        button2 = ttk.Button(self, text="Flight Control Settings",
+        flightControlSettingsPageButton = ttk.Button(self, text="Flight Control Settings",
                             command=lambda: controller.show_frame(FCSettings))
-        button2.pack()
-        button2.place(relx=0.5, rely=0.2, anchor="n")
+        #flightControlSettingsPageButton.pack()
+        #flightControlSettingsPageButton.place(relx=0.5, rely=0.2, anchor="n")
 
-        button3 = ttk.Button(self, text="Live Flight Data",
+        liveFlightDataPageButton = ttk.Button(self, text="Live Flight Data",
                             command=lambda: controller.show_frame(LiveFlight))
-        button3.pack()
-        button3.place(relx=0.7, rely=0.2, anchor="n")
+        #liveFlightDataPageButton.pack()
+        #liveFlightDataPageButton.place(relx=0.7, rely=0.2, anchor="n")
+        
+        #Homepage button grid
+        dataAnalysisPageButton.grid(row=0, column=0, sticky="nsew")
+        flightControlSettingsPageButton.grid(row=0, column=1, sticky="nsew")
+        liveFlightDataPageButton.grid(row=0, column=2, sticky="nsew")
         
         # image
         filepath_logo_nobg = os.path.join(PATH, 'images', 'SEDSIIT-logo_noBG.png')
@@ -218,10 +223,9 @@ class FCSettings(tk.Frame):
         tk.messagebox.showwarning("*Warning", "This will delete ALL DATA ON THE FLIGHT COMPUTER.\nAre you sure you want to delete all data?")
     
     def TestingPageWarningMessageBoxPopup(idx):
-        if (idx == 6):
+            #TODO: Add more warnings/ more robust solution for the TESTING page warnings
             tk.messagebox.showwarning("*Warning", "USE CAREFULLY! (placeholder warning)")
-        else:
-            pass
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         
@@ -258,8 +262,6 @@ class FCSettings(tk.Frame):
         notebook.pack(padx=16, pady=30)
         
         #TODO: Fix the issue of no warning on testing tab when it is selected
-        idx = notebook.index(notebook.select())
-        notebook.bind('<<NotebookTabChanged>>', FCSettings.TestingPageWarningMessageBoxPopup(idx))
         
         # Recovery frame <<<START>>>:
         #Drogue Deploy Delay
@@ -597,7 +599,7 @@ class FCSettings(tk.Frame):
         
         #Aux Frame <<<START>>>:
         testPyroLabel = ttk.Label(testing, text="*Test Pyro: ")
-        testPyroButton = ttk.Button(testing, text="WARNING*Test", command=lambda: FCSettings.TestingPageWarningMessageBoxPopup(6))
+        testPyroButton = ttk.Button(testing, text="WARNING*Test", command=lambda: FCSettings.TestingPageWarningMessageBoxPopup())
         testPyroStatus = ttk.Label(testing, text="Status: NULL")
         
         testTelemetryLabel = ttk.Label(testing, text="Test Telemetry: ")
@@ -638,16 +640,13 @@ class FCSettings(tk.Frame):
         #LOGIC FOR Testing
         #TODO: IMPLEMENT LOGIC FOR Testing
         #<<<END>>> Testing frame
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+class CommunicationPage(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+
+
 class LiveFlight(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
