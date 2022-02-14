@@ -28,7 +28,7 @@ from dataclasses import dataclass
 from distutils import command
 from faulthandler import disable
 import string
-from turtle import width
+from turtle import bgcolor, color, width
 import matplotlib
 from matplotlib import image
 from paramiko import Channel
@@ -134,7 +134,7 @@ class GSApp(tk.Tk):
         self.frames = {}
 
         # Load all pages initially
-        for page in (HomePage, DataAnalysis, FCSettings, LiveFlight):
+        for page in (HomePage, DataAnalysis, FCSettings, LiveFlight, CommunicationPage):
 
             frame = page(container, self)
 
@@ -167,23 +167,23 @@ class HomePage(tk.Frame):
         # menu
         dataAnalysisPageButton = ttk.Button(self, text="Data Analysis",
                             command=lambda: controller.show_frame(DataAnalysis))
-        #dataAnalysisPageButton.pack()
-        #dataAnalysisPageButton.place(relx=0.3, rely=0.2, anchor="n")
+        dataAnalysisPageButton.pack()
+        dataAnalysisPageButton.place(relx=0.2, rely=0.2, anchor="n")
 
         flightControlSettingsPageButton = ttk.Button(self, text="Flight Control Settings",
                             command=lambda: controller.show_frame(FCSettings))
-        #flightControlSettingsPageButton.pack()
-        #flightControlSettingsPageButton.place(relx=0.5, rely=0.2, anchor="n")
+        flightControlSettingsPageButton.pack()
+        flightControlSettingsPageButton.place(relx=0.4, rely=0.2, anchor="n")
 
         liveFlightDataPageButton = ttk.Button(self, text="Live Flight Data",
                             command=lambda: controller.show_frame(LiveFlight))
-        #liveFlightDataPageButton.pack()
-        #liveFlightDataPageButton.place(relx=0.7, rely=0.2, anchor="n")
+        liveFlightDataPageButton.pack()
+        liveFlightDataPageButton.place(relx=0.6, rely=0.2, anchor="n")
         
-        #Homepage button grid
-        dataAnalysisPageButton.grid(row=0, column=0, sticky="nsew")
-        flightControlSettingsPageButton.grid(row=0, column=1, sticky="nsew")
-        liveFlightDataPageButton.grid(row=0, column=2, sticky="nsew")
+        communicationPageButton = ttk.Button(self, text="Communication Page", 
+                            command=lambda: controller.show_frame(CommunicationPage))
+        communicationPageButton.pack()
+        communicationPageButton.place(relx=0.8, rely=0.2, anchor="n")
         
         # image
         filepath_logo_nobg = os.path.join(PATH, 'images', 'SEDSIIT-logo_noBG.png')
@@ -644,7 +644,12 @@ class FCSettings(tk.Frame):
 class CommunicationPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        label = ttk.Label(self, text="Communication Page", font=LARGE_FONT)
+        label.pack(pady=10, padx=10)
 
+        homeButton = ttk.Button(self, text="Home",
+                            command=lambda: controller.show_frame(HomePage))
+        homeButton.pack()
 
 
 class LiveFlight(tk.Frame):
